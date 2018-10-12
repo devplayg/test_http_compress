@@ -1,9 +1,9 @@
 package main
 
 import (
-	"net/http"
-	"log"
 	"fmt"
+	"log"
+	"net/http"
 )
 
 func main() {
@@ -22,5 +22,4 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	for k, arr := range r.Header {
 		fmt.Printf("\theaders: %s = %v\n", k, arr)
 	}
-	println()
 }

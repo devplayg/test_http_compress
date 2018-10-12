@@ -1,15 +1,16 @@
 package main
 
 import (
-	"fmt"
-	"github.com/icrowley/fake"
-	"strings"
-	"net/http"
-	"io/ioutil"
 	"bytes"
-	"flag"
-	"os"
 	"compress/gzip"
+	"flag"
+	"fmt"
+	"github.com/devplayg/test_http_compress"
+	"github.com/icrowley/fake"
+	"io/ioutil"
+	"net/http"
+	"os"
+	"strings"
 )
 
 // Flag set
@@ -19,14 +20,15 @@ func main() {
 	// 옵션
 	fs = flag.NewFlagSet("", flag.ExitOnError)
 	var (
-		compressed         = fs.Bool("z", false, "body compressed")
+		compressed = fs.Bool("z", false, "body compressed")
 	)
 	fs.Usage = printHelp
 	fs.Parse(os.Args[1:])
 
 	// 가상 Mac 주소 생성
-	macStr := createFakeMac(500)
+	macStr := test_http_compress.CreateFakeMac(500)
 
+	// 데이터 압축
 	var buf bytes.Buffer
 	gz := gzip.NewWriter(&buf)
 	if _, err := gz.Write([]byte(macStr)); err != nil {
@@ -76,7 +78,7 @@ func main() {
 
 func createFakeMac(count int) string {
 	var macList []string
-	for i:=0; i<count; i++ {
+	for i := 0; i < count; i++ {
 		mac := fmt.Sprintf("AA:BB:CC:%s:%s:%s",
 			fake.CharactersN(2),
 			fake.CharactersN(2),
@@ -88,6 +90,6 @@ func createFakeMac(count int) string {
 }
 
 func printHelp() {
-	fmt.Println("ekanited [options]")
+	fmt.Println("[options]")
 	fs.PrintDefaults()
 }
