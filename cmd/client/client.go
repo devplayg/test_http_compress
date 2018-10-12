@@ -6,11 +6,9 @@ import (
 	"flag"
 	"fmt"
 	"github.com/devplayg/test_http_compress"
-	"github.com/icrowley/fake"
 	"io/ioutil"
 	"net/http"
 	"os"
-	"strings"
 )
 
 // Flag set
@@ -74,19 +72,6 @@ func main() {
 		println(str)
 	}
 
-}
-
-func createFakeMac(count int) string {
-	var macList []string
-	for i := 0; i < count; i++ {
-		mac := fmt.Sprintf("AA:BB:CC:%s:%s:%s",
-			fake.CharactersN(2),
-			fake.CharactersN(2),
-			fake.CharactersN(2),
-		)
-		macList = append(macList, mac)
-	}
-	return strings.ToUpper(strings.Join(macList, ","))
 }
 
 func printHelp() {
