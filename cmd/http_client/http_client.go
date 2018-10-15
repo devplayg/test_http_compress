@@ -19,12 +19,13 @@ func main() {
 	fs = flag.NewFlagSet("", flag.ExitOnError)
 	var (
 		compressed = fs.Bool("z", false, "body compressed")
+		macCount = fs.Int("c", 500, "MAC Count")
 	)
 	fs.Usage = printHelp
 	fs.Parse(os.Args[1:])
 
 	// 가상 Mac 주소 생성
-	macStr := test_http_compress.CreateFakeMac(500)
+	macStr := test_http_compress.CreateFakeMac(*macCount)
 
 	// 데이터 압축
 	var buf bytes.Buffer
@@ -37,10 +38,8 @@ func main() {
 		fmt.Errorf(err.Error())
 		return
 	}
-	//req, err := http.NewRequest("POST", q.host, &buf)
 
 	// Request 객체 생성
-
 	var req *http.Request
 	var err error
 

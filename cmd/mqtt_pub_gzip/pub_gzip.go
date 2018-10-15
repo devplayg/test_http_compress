@@ -22,6 +22,8 @@ func main() {
 	fs = flag.NewFlagSet("", flag.ExitOnError)
 	var (
 		clientId = fs.String("cid", "test-client-id", "Client ID")
+		macCount = fs.Int("c", 500, "MAC Count")
+
 	)
 	fs.Usage = printHelp
 	fs.Parse(os.Args[1:])
@@ -37,7 +39,7 @@ func main() {
 	}
 
 	// MAC 문자열 생성
-	macStr := test_http_compress.CreateFakeMac(500)
+	macStr := test_http_compress.CreateFakeMac(*macCount)
 
 	// 압축
 	var buf bytes.Buffer

@@ -6,7 +6,6 @@ import (
 	"github.com/devplayg/test_http_compress"
 	"github.com/eclipse/paho.mqtt.golang"
 	"log"
-	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -20,6 +19,7 @@ func main() {
 	fs = flag.NewFlagSet("", flag.ExitOnError)
 	var (
 		clientId = fs.String("cid", "test-client-id", "Client ID")
+		macCount = fs.Int("c", 500, "MAC Count")
 	)
 	fs.Usage = printHelp
 	fs.Parse(os.Args[1:])
@@ -32,10 +32,7 @@ func main() {
 		log.Fatal(token.Error())
 	}
 
-	//http.HandleFunc("/", handler)
-	//log.Fatal(http.ListenAndServe(":8080", nil))
-
-	data := test_http_compress.CreateFakeMac(500)
+	data := test_http_compress.CreateFakeMac(*macCount)
 	if token := client.Publish(test_http_compress.TOPIC, 0, false, data); token.Wait() && token.Error() != nil {
 		log.Fatal(token.Error())
 	}
@@ -51,15 +48,15 @@ func WaitForSignals() {
 		log.Println("Signal received, shutting down...")
 	}
 }
-
-func handler(res http.ResponseWriter, req *http.Request) {
-	data := test_http_compress.CreateFakeMac(500)
-	if token := client.Publish(test_http_compress.TOPIC, 0, false, data); token.Wait() && token.Error() != nil {
-		log.Fatal(token.Error())
-	}
-
-	fmt.Fprintf(res, "hello %s", "abc")
-}
+//
+//func handler(res http.ResponseWriter, req *http.Request) {
+//	data := test_http_compress.CreateFakeMac(500)
+//	if token := client.Publish(test_http_compress.TOPIC, 0, false, data); token.Wait() && token.Error() != nil {
+//		log.Fatal(token.Error())
+//	}
+//
+//	fmt.Fprintf(res, "hello %s", "abc")
+//}
 
 func printHelp() {
 	fmt.Println("[options]")

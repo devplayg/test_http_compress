@@ -6,7 +6,6 @@ import (
 	"github.com/eclipse/paho.mqtt.golang"
 	"github.com/icrowley/fake"
 	"log"
-	"net/http"
 	"os"
 	"os/signal"
 	"strings"
@@ -34,7 +33,7 @@ func main() {
 	}); token.Wait() && token.Error() != nil {
 		log.Fatal(token.Error())
 	}
-	//data := CreateFakeMac(500)
+	//data := CreateFakeMac(test_http_compress.MacCount)
 	//if token := client.Publish(TOPIC, 0, false, data); token.Wait() && token.Error() != nil {
 	//	log.Fatal(token.Error())
 	//}
@@ -65,12 +64,12 @@ func WaitForSignals() {
 		log.Println("Signal received, shutting down...")
 	}
 }
-
-func handler(res http.ResponseWriter, req *http.Request) {
-	data := CreateFakeMac(500)
-	if token := client.Publish(test_http_compress.TOPIC, 0, false, data); token.Wait() && token.Error() != nil {
-		log.Fatal(token.Error())
-	}
-
-	fmt.Fprintf(res, "hello %s", "abc")
-}
+//
+//func handler(res http.ResponseWriter, req *http.Request) {
+//	data := CreateFakeMac(test_http_compress.MacCount)
+//	if token := client.Publish(test_http_compress.TOPIC, 0, false, data); token.Wait() && token.Error() != nil {
+//		log.Fatal(token.Error())
+//	}
+//
+//	fmt.Fprintf(res, "hello %s", "abc")
+//}

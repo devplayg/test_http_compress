@@ -8,7 +8,7 @@ import (
 
 const TOPIC = "unisem/iot/mqtt"
 
-func CreateFakeMac(count int) string {
+func CreateFakeMacOld2(count int) string {
 	var macList []string
 	for i:=1; i<=count; i++ {
 		mac := fmt.Sprintf("FAKEMACFAKEMAC%d",
@@ -18,10 +18,13 @@ func CreateFakeMac(count int) string {
 	}
 	return strings.ToUpper(strings.Join(macList, ","))
 }
-func CreateFakeMac_old(count int) string {
+func CreateFakeMac(count int) string {
 	var macList []string
 	for i:=0; i<count; i++ {
-		mac := fmt.Sprintf("AA:BB:CC:%s:%s:%s",
+		mac := fmt.Sprintf("%s:%s:%s:%s:%s:%s",
+			fake.CharactersN(2),
+			fake.CharactersN(2),
+			fake.CharactersN(2),
 			fake.CharactersN(2),
 			fake.CharactersN(2),
 			fake.CharactersN(2),
